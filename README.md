@@ -12,16 +12,6 @@ A **Virtual Machine** emulates a full operating system with its own kernel. It i
 
 In this project, Docker is used because it allows each service to run in an isolated environment while staying lightweight and easy to manage.
 
-### Secrets vs Environment Variables
-
-**Environment variables** are simple to use and practical for configuration values such as a domain name or database name.  
-However, they are not ideal for sensitive data because they may be exposed more easily.
-
-**Secrets** are designed to store sensitive information such as passwords or private keys more securely. They reduce the risk of exposing confidential data in the project files.
-
-In this project, environment variables are used for configuration, and secrets for sensitive values like passwords.
-
-
 ### Docker Network vs Host Network
 
 A **Docker network** allows containers to communicate with each other in an isolated and controlled way. Each service can reach another service by its container name.  
@@ -52,11 +42,9 @@ newgrp docker
 ```bash
 sudo apt-get install make
 ```
-### create .env file and secret file
+### create .env file
 ```bash
-mkdir -p secrets srcs && \
 printf "DOMAIN_NAME=\nMYSQL_DATABASE=\nWP_TITLE=\nWP_ADMIN=\nWP_ADMIN_EMAIL=\nWP_ADMIN_PASSWORD=\nWP_USER=\nWP_USER_EMAIL=\nWP_USER_PASSWORD=\n" >> srcs/.env
-touch secrets/{credentials.txt,db_password.txt,db_root_password.txt}
 ```
 add your value in .env
 ```text

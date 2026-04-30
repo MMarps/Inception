@@ -24,10 +24,7 @@ The project is designed to be:
 ├── DEV_DOC.md
 ├── Makefile
 ├── README.md
-├── secrets
-│   ├── credentials.txt
-│   ├── db_password.txt
-│   └── db_root_password.txt
+├── USER_DOC.md
 └── srcs
     ├── docker-compose.yml
     ├── .env
@@ -37,7 +34,7 @@ The project is designed to be:
         │   │   └── 50-server.cnf
         │   ├── Dockerfile
         │   └── tools
-        │       └── init.sh
+        │       └── script.sh
         ├── nginx
         │   ├── conf
         │   │   └── nginx.conf
@@ -46,15 +43,12 @@ The project is designed to be:
             ├── conf
             ├── Dockerfile
             └── tools
-                └── init.sh
+                └── script.sh
 ```
 
 ### Structure details
 
 - `Makefile`: main entrypoint to build, start, stop, clean, and rebuild the infrastructure
-- `secrets/credential.txt`: define database admin username
-- `secrets/db_password.txt`: define database admin password
-- `secrets/db_root_password.txt`: define database root password
 - `srcs/.env`: define environement variables domain name & database name
 - `srcs/docker-compose.yml`: defines services, volumes, and network
 - `srcs/requirements/mariadb/`: MariaDB image, config, and initialization script
@@ -77,11 +71,9 @@ newgrp docker
 ```bash
 sudo apt-get install make
 ```
-### create .env file and secret file
+### create .env file
 ```bash
-mkdir -p secrets srcs && \
 printf "DOMAIN_NAME=\nMYSQL_DATABASE=\nWP_TITLE=\nWP_ADMIN=\nWP_ADMIN_EMAIL=\nWP_ADMIN_PASSWORD=\nWP_USER=\nWP_USER_EMAIL=\nWP_USER_PASSWORD=\n" >> srcs/.env
-touch secrets/{credentials.txt,db_password.txt,db_root_password.txt}
 ```
 add your value in .env
 ```text
@@ -111,14 +103,13 @@ in `/etc/hosts` add or  change
 - It should never contain production credentials in a public repository.
 - It makes the stack easier to configure and reuse.
 
-### Secrets and sensitive data
+### Sensitive data
 
 Sensitive data must not be hardcoded in Dockerfiles or scripts.
 
 Good practices:
-- store configuration values in `.env` or `secrets/` files
+- store configuration values in `.env`
 - keep credentials out of Git
-- use Docker secrets
 
 # Build and Launch
 
@@ -322,7 +313,7 @@ srcs/requirements/mariadb/tools/init.sh
 Important points:
 - no NGINX inside this container
 - database data must persist through volumes
-- credentials should come from environment variables or secrets
+- credentials should come from environment variables
 
 ## Volumes and Data Persistence
 

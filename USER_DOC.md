@@ -62,11 +62,9 @@ newgrp docker
 ```bash
 sudo apt-get install make
 ```
-### create .env file and secret file
+### create .env file
 ```bash
-mkdir -p secrets srcs && \
 printf "DOMAIN_NAME=\nMYSQL_DATABASE=\nWP_TITLE=\nWP_ADMIN=\nWP_ADMIN_EMAIL=\nWP_ADMIN_PASSWORD=\nWP_USER=\nWP_USER_EMAIL=\nWP_USER_PASSWORD=\n" >> srcs/.env
-touch secrets/{credentials.txt,db_password.txt,db_root_password.txt}
 ```
 add your value in .env
 ```text
@@ -167,7 +165,7 @@ Log in using the administrator credentials defined during the WordPress setup.
 
 ## Credentials Management
 
-The project uses environment variables and secrets to manage credentials.
+The project uses environment variables to manage credentials.
 
 Typical credentials include:
 - MariaDB database name
@@ -182,11 +180,6 @@ Credentials are usually stored in:
 ```text
 srcs/.env
 ```
-or
-```text
-secrets/
-```
-and/or in secret files if your project uses them.
 
 ## Notes
 
@@ -194,14 +187,13 @@ and/or in secret files if your project uses them.
 - It should never contain production credentials in a public repository.
 - It makes the stack easier to configure and reuse.
 
-### Secrets and sensitive data
+### Sensitive data
 
 Sensitive data must not be hardcoded in Dockerfiles or scripts.
 
 Good practices:
-- store configuration values in `.env` or `secrets/` files
+- store configuration values in `.env`
 - keep credentials out of Git
-- use Docker secrets
 
 ## Check That Services Are Running Correctly
 
